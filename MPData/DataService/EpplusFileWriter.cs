@@ -62,6 +62,14 @@ namespace MPData.DataService
             worksheet.Cells[cellLocations[2]].Value = meal.SideDish;
         }
 
+        private void WriteTestCells(ExcelWorksheet worksheet)
+        {
+            worksheet.Cells["A1"].Value = "test";
+            worksheet.Cells["C3"].Value = "test";
+            worksheet.Cells["E5"].Value = "test";
+            worksheet.Cells["G7"].Value = "test";
+        }
+
         private void InitializeCellLocations()
         {
             _cellLocations.Add("Monday_1", new List<string> { "C31", "C33", "C35" });

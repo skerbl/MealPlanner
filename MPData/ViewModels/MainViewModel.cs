@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using Spire.Xls;
+using System.Diagnostics;
 
 namespace MPData.ViewModels
 {
@@ -73,7 +75,7 @@ namespace MPData.ViewModels
 
         public MainViewModel(IDishItemDataService dishItemDataService, IFileWriter excelWriter)
         {
-            this.SaveCommand = new RelayCommand(SaveAsExcel);
+            this.SaveCommand = new RelayCommand(SaveFiles);
 
             _dishItemDataService = dishItemDataService;
             _excelFileWriter = excelWriter;
@@ -166,7 +168,7 @@ namespace MPData.ViewModels
             //_dishItemDataService.CloseConnection();
         }
 
-        private void SaveAsExcel()
+        private void SaveFiles()
         {
             if (string.IsNullOrEmpty(FileName))
             {
@@ -183,9 +185,44 @@ namespace MPData.ViewModels
 
             string combinedPath = Path.Combine(Settings.ExportPath, Path.GetFileName(FileName));
             FileInfo file = new FileInfo(combinedPath);
+
+            SaveAsExcel(file);
+
+            if (file.Exists)
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = @"OfficeToPDF.exe";
+                startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
+                Process.Start(startInfo);
+
+                // TODO: Save as PDF in another way?
+                //SaveAsPdf(file);
+            }
+        }
+
+        private void SaveAsExcel(FileInfo file)
+        {
             file.Directory.Create();
 
             _excelFileWriter.WriteToFile(Meals, FromDate, ToDate, file.FullName);
+        }
+
+        private void SaveAsPdf(FileInfo file)
+        {
+            Workbook workbook = new Workbook();
+            workbook.LoadFromFile(file.FullName);
+
+            Worksheet sheet = workbook.Worksheets[0];
+
+            sheet.PageSetup.PaperSize = PaperSizeType.PaperA4;
+            sheet.PageSetup.FitToPagesWide = 1;
+            sheet.PageSetup.FitToPagesTall = 1;
+            sheet.PageSetup.TopMargin = 0.5;
+            sheet.PageSetup.LeftMargin = 0.5;
+            sheet.PageSetup.RightMargin = 0.5;
+            sheet.PageSetup.BottomMargin = 0.5;
+
+            sheet.SaveToPdf(Path.ChangeExtension(file.FullName, ".pdf"));
         }
 
         private void InitializeMeals()

@@ -77,6 +77,9 @@
     <Reference Include="PropertyChanged, Version=3.3.2.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.3.3.2\lib\net40\PropertyChanged.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.XLS, Version=10.10.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.10.10.0\lib\net40\Spire.XLS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -91,7 +94,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseNotificationClass.cs" />
+    <Compile Include="ViewModels\BaseNotificationClass.cs" />
     <Compile Include="DataService\CsvDataService.cs" />
     <Compile Include="DataService\EpplusFileWriter.cs" />
     <Compile Include="DataService\IDishItemDataService.cs" />
@@ -108,6 +111,7 @@
     <Compile Include="ViewModels\RelayCommand.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

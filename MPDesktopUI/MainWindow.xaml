@@ -84,7 +84,7 @@
                     <Label Content="Montag" Padding="5 0"
                                Grid.Column="0" Grid.ColumnSpan="2"  
                                HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
+                               FontWeight="Bold" FontSize="14" />
 
                     <StackPanel Grid.Column="0" >
                         <Label Content="Menü 1" HorizontalAlignment="Center"
