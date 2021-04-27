@@ -8,7 +8,9 @@
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
     </Style>
-
+    
+    <!--
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
+    -->
 
 </ResourceDictionary>

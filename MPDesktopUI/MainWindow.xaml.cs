@@ -48,10 +48,15 @@ namespace MPDesktopUI
             window.DataContext = _mainViewModel;
             window.Show();
         }
+        private void Menu_Close(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.Close();
+        }
 
         private void OnErrorMessageRaised(object sender, MessageEventArgs e)
         {
             MessageBox.Show(e.Message, "Fehler", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
+
     }
 }

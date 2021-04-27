@@ -15,7 +15,7 @@
                 <MenuItem Header="_Einstellungen" Click="Menu_Settings"/>
                 <MenuItem Header="_Drucken" />
                 <Separator />
-                <MenuItem Header="_Beenden" />
+                <MenuItem Header="_Beenden" Click="Menu_Close" />
             </MenuItem>
         </Menu>
 

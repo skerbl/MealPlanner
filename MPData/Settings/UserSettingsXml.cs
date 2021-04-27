@@ -46,7 +46,7 @@ namespace MPData.Settings
             else
             {
                 file.Directory.Create();
-                settings = new UserSettings { ExportPath = "", TemplatePath = "" };
+                settings = new UserSettings { ExportPath = "", TemplatePath = "", SaveAsPdf = true };
 
                 using (TextWriter writer = new StreamWriter(_settingsPath))
                 {

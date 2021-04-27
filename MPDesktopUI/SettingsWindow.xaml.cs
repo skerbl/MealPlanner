@@ -19,10 +19,11 @@ namespace MPDesktopUI
             InitializeComponent();
 
             _mainViewModel = mainViewModel;
-            _oldSettings = new UserSettings 
-            { 
-                ExportPath = _mainViewModel.Settings.ExportPath, 
-                TemplatePath = _mainViewModel.Settings.TemplatePath 
+            _oldSettings = new UserSettings
+            {
+                ExportPath = _mainViewModel.Settings.ExportPath,
+                TemplatePath = _mainViewModel.Settings.TemplatePath,
+                SaveAsPdf = _mainViewModel.Settings.SaveAsPdf
             };
         }
 

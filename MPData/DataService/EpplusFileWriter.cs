@@ -50,6 +50,7 @@ namespace MPData.DataService
                     WriteMeal(worksheet, meal.Value, _cellLocations[meal.Key]);
                 }
 
+                worksheet.PrinterSettings.PrintArea = worksheet.Cells["B2:L90"];
                 worksheet.Select();
                 package.Save();
             }

@@ -4,5 +4,6 @@
     {
         public string ExportPath { get; set; }
         public string TemplatePath { get; set; }
+        public bool SaveAsPdf { get; set; }
     }
 }

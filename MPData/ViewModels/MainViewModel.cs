@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using Spire.Xls;
 using System.Diagnostics;
 
 namespace MPData.ViewModels
@@ -21,6 +20,7 @@ namespace MPData.ViewModels
         public event EventHandler<MessageEventArgs> OnErrorMessageRaised;
 
         public ICommand SaveCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
 
         public UserSettings Settings { get; set; }
         public ObservableCollection<string> Starters { get; set; }
@@ -75,7 +75,7 @@ namespace MPData.ViewModels
 
         public MainViewModel(IDishItemDataService dishItemDataService, IFileWriter excelWriter)
         {
-            this.SaveCommand = new RelayCommand(SaveFiles);
+            SaveCommand = new RelayCommand(SaveFiles);
 
             _dishItemDataService = dishItemDataService;
             _excelFileWriter = excelWriter;
@@ -188,12 +188,26 @@ namespace MPData.ViewModels
 
             SaveAsExcel(file);
 
-            if (file.Exists)
+            if (Settings.SaveAsPdf)
             {
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.FileName = @"OfficeToPDF.exe";
-                startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
-                Process.Start(startInfo);
+                if (!file.Exists)
+                {
+                    return;
+                }
+
+                FileInfo officeToPdf = new FileInfo("OfficeToPDF.exe");
+                if (officeToPdf.Exists)
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                    startInfo.FileName = @"OfficeToPDF.exe";
+                    startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
+                    Process.Start(startInfo);
+                }
+                else
+                {
+                    RaiseMessage("Konnte nicht als PDF speichern.\nDatei \"OfficeToPDF.exe\" nicht gefunden.");
+                }
+                
 
                 // TODO: Save as PDF in another way?
                 //SaveAsPdf(file);
@@ -209,20 +223,20 @@ namespace MPData.ViewModels
 
         private void SaveAsPdf(FileInfo file)
         {
-            Workbook workbook = new Workbook();
-            workbook.LoadFromFile(file.FullName);
-
-            Worksheet sheet = workbook.Worksheets[0];
-
-            sheet.PageSetup.PaperSize = PaperSizeType.PaperA4;
-            sheet.PageSetup.FitToPagesWide = 1;
-            sheet.PageSetup.FitToPagesTall = 1;
-            sheet.PageSetup.TopMargin = 0.5;
-            sheet.PageSetup.LeftMargin = 0.5;
-            sheet.PageSetup.RightMargin = 0.5;
-            sheet.PageSetup.BottomMargin = 0.5;
-
-            sheet.SaveToPdf(Path.ChangeExtension(file.FullName, ".pdf"));
+            //Workbook workbook = new Workbook();
+            //workbook.LoadFromFile(file.FullName);
+            //
+            //Worksheet sheet = workbook.Worksheets[0];
+            //
+            //sheet.PageSetup.PaperSize = PaperSizeType.PaperA4;
+            //sheet.PageSetup.FitToPagesWide = 1;
+            //sheet.PageSetup.FitToPagesTall = 1;
+            //sheet.PageSetup.TopMargin = 0.5;
+            //sheet.PageSetup.LeftMargin = 0.5;
+            //sheet.PageSetup.RightMargin = 0.5;
+            //sheet.PageSetup.BottomMargin = 0.5;
+            //
+            //sheet.SaveToPdf(Path.ChangeExtension(file.FullName, ".pdf"));
         }
 
         private void InitializeMeals()
