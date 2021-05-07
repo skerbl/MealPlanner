@@ -1,8 +1,4 @@
-﻿using MPData.DataService;
-using MPData.EventArgs;
-using MPData.Models;
-using MPData.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Diagnostics;
 
-namespace MPData.ViewModels
+namespace MPData
 {
     public class MainViewModel : BaseNotificationClass
     {
@@ -18,6 +14,7 @@ namespace MPData.ViewModels
         private IFileWriter _excelFileWriter;
 
         public event EventHandler<MessageEventArgs> OnErrorMessageRaised;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         public ICommand SaveCommand { get; set; }
         public ICommand CloseCommand { get; set; }
@@ -29,8 +26,31 @@ namespace MPData.ViewModels
 
         public Dictionary<string, Meal> Meals { get; set; }
 
+        public MealListViewModel MealList1 { get; set; }
+        public MealListViewModel MealList2 { get; set; }
 
-        public string SelectedItem { get; set; }
+        public string SelectedItem 
+        { 
+            get => _selectedItem;
+            set 
+            {
+                _selectedItem = value;
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                OnPropertyChanged();
+            } 
+        }
+
+        public DishType SelectedType
+        {
+            get => _selectedType; 
+            set 
+            {
+                _selectedType = value;
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _fromDate;
 
@@ -50,6 +70,8 @@ namespace MPData.ViewModels
         public string NewItem { get; set; }
 
         private string _fileName;
+        private string _selectedItem;
+        private DishType _selectedType;
 
         public string FileName
         {
@@ -87,6 +109,10 @@ namespace MPData.ViewModels
             SideDishes = new ObservableCollection<string>();
 
             Meals = new Dictionary<string, Meal>();
+
+            MealList1 = new MealListViewModel(this);
+            MealList2 = new MealListViewModel(this);
+            MealList2.Meals.RemoveAll(x => x.Weekday == "Samstag");
 
             InitializeMeals();
             LoadDishes();

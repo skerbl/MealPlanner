@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using MPData;
+using System.Windows;
 using System.Windows.Threading;
-using MPData.Services;
 
 namespace MPDesktopUI
 {

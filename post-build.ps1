@@ -13,7 +13,7 @@ If(!(test-path settings))
     New-Item -ItemType Directory -Force -Path settings
 }
 
-& "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\xsd.exe" MPData.dll /type:MPData.Settings.UserSettings -outputdir:settings
+& "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\x64\xsd.exe" MPData.dll /type:MPData.UserSettings -outputdir:settings
 
 If(test-path settings\schema0.xsd)
 {

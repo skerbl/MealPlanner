@@ -1,6 +1,4 @@
-﻿using MPData.DataService;
-using MPData.EventArgs;
-using MPData.ViewModels;
+﻿using MPData;
 using System.Windows;
 using System.Windows.Controls;
 

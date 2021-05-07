@@ -1,9 +1,8 @@
-﻿using MPData.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using OfficeOpenXml;
 
-namespace MPData.DataService
+namespace MPData
 {
     public class EpplusFileWriter : IFileWriter
     {

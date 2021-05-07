@@ -1,4 +1,4 @@
-﻿namespace MPData.Models
+﻿namespace MPData
 {
     public enum DishType
     {

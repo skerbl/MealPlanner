@@ -1,4 +1,4 @@
-﻿namespace MPData.Settings
+﻿namespace MPData
 {
     public class UserSettings : BaseNotificationClass
     {

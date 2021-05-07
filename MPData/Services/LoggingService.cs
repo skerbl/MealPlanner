@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MPData.Services
+namespace MPData
 {
     public static class LoggingService
     {

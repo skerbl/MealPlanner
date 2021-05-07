@@ -1,8 +1,5 @@
-﻿using MPData.ViewModels;
-using MPData.Settings;
+﻿using MPData;
 using System.Windows;
-using System.Windows.Controls;
-using Ookii.Dialogs;
 
 namespace MPDesktopUI
 {

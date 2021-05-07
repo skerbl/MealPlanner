@@ -100,9 +100,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\MealControl.xaml.cs">
+      <DependentUpon>MealControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MealListControl.xaml.cs">
+      <DependentUpon>MealListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\MealControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MealListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
