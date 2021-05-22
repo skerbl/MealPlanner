@@ -98,7 +98,6 @@
 
                             <Button Grid.Column="0" Name="Monday_1" Content=">"
                                     FontSize="18" FontWeight="Bold"
-                                    Style="{StaticResource RoundCornerButton}"
                                     Click="OnClick_AddDishToMeal" />
 
                             <StackPanel Grid.Column="1" Orientation="Vertical">
