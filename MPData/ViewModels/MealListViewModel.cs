@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MPData
 {
-    public class MealListViewModel
+    public class MealListViewModel : BaseNotificationClass
     {
         #region Public Properties
 
@@ -13,7 +12,7 @@ namespace MPData
 
         #region Constructor
 
-        public MealListViewModel(MainViewModel mainViewModel)
+        public MealListViewModel()
         {
             Meals = new List<MealViewModel>()
             {
@@ -24,11 +23,6 @@ namespace MPData
                 new MealViewModel() { Weekday = "Freitag" },
                 new MealViewModel() { Weekday = "Samstag" },
             };
-
-            foreach (var meal in Meals)
-            {
-                mainViewModel.SelectionChanged += meal.OnSelectionChanged;
-            }
         }
 
         #endregion

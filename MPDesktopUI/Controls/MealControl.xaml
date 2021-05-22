@@ -8,26 +8,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="300">
 
-    <StackPanel Grid.Column="0" >
-        <TextBlock Text="Menü 1" HorizontalAlignment="Center"
-                   FontSize="14" FontWeight="Bold" Padding="0"/>
+    <Border BorderThickness="2"
+            BorderBrush="Black"
+            CornerRadius="15"
+            Background="AliceBlue"
+            >
+        <StackPanel>
+            <TextBlock Text="Menü 1" HorizontalAlignment="Center"
+                       FontSize="14" FontWeight="Bold" Padding="0"/>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="6*" />
-            </Grid.ColumnDefinitions>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Name="Monday_1" Content=">"
-                    FontSize="18" FontWeight="Bold"
-                    />
+                <Button Grid.Column="0" Name="Monday_1" Content=">"
+                        FontSize="18" FontWeight="Bold"
+                        Style="{StaticResource RoundCornerButton}"/>
 
-            <StackPanel Grid.Column="1" Orientation="Vertical">
+                <StackPanel Grid.Column="1" Orientation="Vertical">
 
-                <TextBox Text="{Binding Meals[Monday_1].Starter}" />
-                <TextBox Text="{Binding Meals[Monday_1].MainDish}" />
-                <TextBox Text="{Binding Meals[Monday_1].SideDish}" />
-            </StackPanel>
-        </Grid>
-    </StackPanel>
+                    <TextBox Text="{Binding Meals[Monday_1].Starter}" />
+                    <TextBox Text="{Binding Meals[Monday_1].MainDish}" />
+                    <TextBox Text="{Binding Meals[Monday_1].SideDish}" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Border>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using System.Windows.Input;
 
 namespace MPData
 {
@@ -10,6 +11,7 @@ namespace MPData
         public string Starter { get; set; } = "";
         public string MainDish { get; set; } = "";
         public string SideDish { get; set; } = "";
+        public ICommand AddItemCommand { get; set; }
 
         #endregion
 
@@ -17,6 +19,40 @@ namespace MPData
 
         private string _selectedItem;
         private DishType _selectedType;
+
+        #endregion
+
+        #region Constructor
+
+        public MealViewModel()
+        {
+            AddItemCommand = new RelayCommand(AddItem);
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void AddItem()
+        {
+            switch (_selectedType)
+            {
+                case DishType.Starters:
+                    Starter = _selectedItem;
+                    break;
+
+                case DishType.MainDishes:
+                    MainDish = _selectedItem;
+                    break;
+
+                case DishType.SideDishes:
+                    SideDish = _selectedItem;
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         #endregion
 

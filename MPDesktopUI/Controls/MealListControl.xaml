@@ -7,7 +7,19 @@
              xmlns:viewModels="clr-namespace:MPData;assembly=MPData"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+
+    <UserControl.DataContext>
+        <viewModels:MealListViewModel />
+    </UserControl.DataContext>
+    <Grid Background="White">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Meals}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:MealControl />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
