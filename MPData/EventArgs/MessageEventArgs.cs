@@ -1,4 +1,4 @@
-﻿namespace MPData.EventArgs
+﻿namespace MPData
 {
     public class MessageEventArgs : System.EventArgs
     {

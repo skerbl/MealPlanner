@@ -1,9 +1,7 @@
-﻿using MPData.EventArgs;
-using MPData.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace MPData.DataService
+namespace MPData
 {
     public interface IDishItemDataService
     {

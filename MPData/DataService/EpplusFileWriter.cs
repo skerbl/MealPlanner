@@ -1,9 +1,8 @@
-﻿using MPData.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using OfficeOpenXml;
 
-namespace MPData.DataService
+namespace MPData
 {
     public class EpplusFileWriter : IFileWriter
     {
@@ -50,6 +49,7 @@ namespace MPData.DataService
                     WriteMeal(worksheet, meal.Value, _cellLocations[meal.Key]);
                 }
 
+                worksheet.PrinterSettings.PrintArea = worksheet.Cells["B2:L90"];
                 worksheet.Select();
                 package.Save();
             }
@@ -60,6 +60,14 @@ namespace MPData.DataService
             worksheet.Cells[cellLocations[0]].Value = meal.Starter;
             worksheet.Cells[cellLocations[1]].Value = meal.MainDish;
             worksheet.Cells[cellLocations[2]].Value = meal.SideDish;
+        }
+
+        private void WriteTestCells(ExcelWorksheet worksheet)
+        {
+            worksheet.Cells["A1"].Value = "test";
+            worksheet.Cells["C3"].Value = "test";
+            worksheet.Cells["E5"].Value = "test";
+            worksheet.Cells["G7"].Value = "test";
         }
 
         private void InitializeCellLocations()

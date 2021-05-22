@@ -1,7 +1,6 @@
-﻿using MPData.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MPData.DataService
+namespace MPData
 {
     public interface IFileWriter
     {

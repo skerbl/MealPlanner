@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:MPData.ViewModels;assembly=MPData"
+        xmlns:viewModels="clr-namespace:MPData;assembly=MPData"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
         mc:Ignorable="d"
         TextOptions.TextRenderingMode="ClearType"
@@ -15,7 +15,7 @@
                 <MenuItem Header="_Einstellungen" Click="Menu_Settings"/>
                 <MenuItem Header="_Drucken" />
                 <Separator />
-                <MenuItem Header="_Beenden" />
+                <MenuItem Header="_Beenden" Click="Menu_Close" />
             </MenuItem>
         </Menu>
 
@@ -84,7 +84,7 @@
                     <Label Content="Montag" Padding="5 0"
                                Grid.Column="0" Grid.ColumnSpan="2"  
                                HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
+                               FontWeight="Bold" FontSize="14" />
 
                     <StackPanel Grid.Column="0" >
                         <Label Content="Menü 1" HorizontalAlignment="Center"
@@ -97,8 +97,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0" Name="Monday_1" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
+                                    FontSize="18" FontWeight="Bold"
+                                    Click="OnClick_AddDishToMeal" />
 
                             <StackPanel Grid.Column="1" Orientation="Vertical">
 
@@ -120,8 +120,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Button Grid.Column="0" Name="Monday_2" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
+                                    FontSize="18" FontWeight="Bold"
+                                    Click="OnClick_AddDishToMeal" />
 
                             <StackPanel Grid.Column="1" Orientation="Vertical">
 

@@ -91,7 +91,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseNotificationClass.cs" />
+    <Compile Include="EventArgs\SelectionChangedEventArgs.cs" />
+    <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="ViewModels\BaseNotificationClass.cs" />
     <Compile Include="DataService\CsvDataService.cs" />
     <Compile Include="DataService\EpplusFileWriter.cs" />
     <Compile Include="DataService\IDishItemDataService.cs" />
@@ -99,15 +101,18 @@
     <Compile Include="EventArgs\MessageEventArgs.cs" />
     <Compile Include="Models\DishType.cs" />
     <Compile Include="Models\Meal.cs" />
-    <Compile Include="Models\Weekday.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Settings\UserSettingsXml.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="ViewModels\DishItemListViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="ViewModels\MealListViewModel.cs" />
+    <Compile Include="ViewModels\MealViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

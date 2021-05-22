@@ -1,24 +1,37 @@
-﻿using MPData.DataService;
-using MPData.EventArgs;
-using MPData.Models;
-using MPData.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Diagnostics;
 
-namespace MPData.ViewModels
+namespace MPData
 {
     public class MainViewModel : BaseNotificationClass
     {
+        #region Private Members
+
         private IDishItemDataService _dishItemDataService;
         private IFileWriter _excelFileWriter;
+        private string _fromDate;
+        private string _fileName;
+        private string _selectedItem;
+        private DishType _selectedType;
+
+        #endregion
+
+        #region Public Events
 
         public event EventHandler<MessageEventArgs> OnErrorMessageRaised;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+
+        #endregion
+
+        #region Public Properties
 
         public ICommand SaveCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
 
         public UserSettings Settings { get; set; }
         public ObservableCollection<string> Starters { get; set; }
@@ -27,15 +40,35 @@ namespace MPData.ViewModels
 
         public Dictionary<string, Meal> Meals { get; set; }
 
+        public MealListViewModel MealList1 { get; set; }
+        public MealListViewModel MealList2 { get; set; }
 
-        public string SelectedItem { get; set; }
+        public string SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                OnPropertyChanged();
+            }
+        }
 
-        private string _fromDate;
+        public DishType SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                _selectedType = value;
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                OnPropertyChanged();
+            }
+        }
 
         public string FromDate
         {
             get => _fromDate;
-            set 
+            set
             {
                 _fromDate = value;
                 FileName = _fromDate;
@@ -47,12 +80,10 @@ namespace MPData.ViewModels
 
         public string NewItem { get; set; }
 
-        private string _fileName;
-
         public string FileName
         {
             get => _fileName;
-            set 
+            set
             {
                 if (string.IsNullOrEmpty(value))
                 {
@@ -65,15 +96,18 @@ namespace MPData.ViewModels
                 {
                     _fileName = value + ".xlsx";
                 }
-                
+
                 OnPropertyChanged();
             }
         }
 
+        #endregion
+
+        #region Constructor
 
         public MainViewModel(IDishItemDataService dishItemDataService, IFileWriter excelWriter)
         {
-            this.SaveCommand = new RelayCommand(SaveAsExcel);
+            SaveCommand = new RelayCommand(SaveFiles);
 
             _dishItemDataService = dishItemDataService;
             _excelFileWriter = excelWriter;
@@ -86,9 +120,14 @@ namespace MPData.ViewModels
 
             Meals = new Dictionary<string, Meal>();
 
+            InitializeViewModels();
             InitializeMeals();
             LoadDishes();
         }
+
+        #endregion
+
+        #region Public Methods
 
         public void AddDishToMeal(string buttonName, string tabItemName)
         {
@@ -114,7 +153,7 @@ namespace MPData.ViewModels
             {
                 return;
             }
-            
+
             IEnumerable<string> newList = default;
 
             switch (tabItemName)
@@ -137,6 +176,10 @@ namespace MPData.ViewModels
 
             NewItem = "";
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void LoadDishes()
         {
@@ -166,7 +209,7 @@ namespace MPData.ViewModels
             //_dishItemDataService.CloseConnection();
         }
 
-        private void SaveAsExcel()
+        private void SaveFiles()
         {
             if (string.IsNullOrEmpty(FileName))
             {
@@ -183,9 +226,75 @@ namespace MPData.ViewModels
 
             string combinedPath = Path.Combine(Settings.ExportPath, Path.GetFileName(FileName));
             FileInfo file = new FileInfo(combinedPath);
+
+            SaveAsExcel(file);
+
+            if (Settings.SaveAsPdf)
+            {
+                if (!file.Exists)
+                {
+                    return;
+                }
+
+                FileInfo officeToPdf = new FileInfo("OfficeToPDF.exe");
+                if (officeToPdf.Exists)
+                {
+                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                    startInfo.FileName = @"OfficeToPDF.exe";
+                    startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
+                    Process.Start(startInfo);
+                }
+                else
+                {
+                    RaiseMessage("Konnte nicht als PDF speichern.\nDatei \"OfficeToPDF.exe\" nicht gefunden.");
+                }
+
+
+                // TODO: Save as PDF in another way?
+                //SaveAsPdf(file);
+            }
+        }
+
+        private void SaveAsExcel(FileInfo file)
+        {
             file.Directory.Create();
 
             _excelFileWriter.WriteToFile(Meals, FromDate, ToDate, file.FullName);
+        }
+
+        private void SaveAsPdf(FileInfo file)
+        {
+            //Workbook workbook = new Workbook();
+            //workbook.LoadFromFile(file.FullName);
+            //
+            //Worksheet sheet = workbook.Worksheets[0];
+            //
+            //sheet.PageSetup.PaperSize = PaperSizeType.PaperA4;
+            //sheet.PageSetup.FitToPagesWide = 1;
+            //sheet.PageSetup.FitToPagesTall = 1;
+            //sheet.PageSetup.TopMargin = 0.5;
+            //sheet.PageSetup.LeftMargin = 0.5;
+            //sheet.PageSetup.RightMargin = 0.5;
+            //sheet.PageSetup.BottomMargin = 0.5;
+            //
+            //sheet.SaveToPdf(Path.ChangeExtension(file.FullName, ".pdf"));
+        }
+
+        private void InitializeViewModels()
+        {
+            MealList1 = new MealListViewModel();
+            MealList2 = new MealListViewModel();
+
+            foreach (var meal in MealList1.Meals)
+            {
+                SelectionChanged += meal.OnSelectionChanged;
+            }
+
+            MealList2.Meals.RemoveAll(x => x.Weekday == "Samstag"); 
+            foreach (var meal in MealList2.Meals)
+            {
+                SelectionChanged += meal.OnSelectionChanged;
+            }
         }
 
         private void InitializeMeals()
@@ -203,14 +312,19 @@ namespace MPData.ViewModels
             Meals.Add("Saturday", new Meal());
         }
 
+        private void CloseApplication()
+        {
+
+        }
+
         private bool IsValidFilename(string testName)
         {
             string strTheseAreInvalidFileNameChars = new string(Path.GetInvalidFileNameChars());
             Regex regInvalidFileName = new Regex("[" + Regex.Escape(strTheseAreInvalidFileNameChars) + "]");
 
-            if (regInvalidFileName.IsMatch(testName)) 
-            { 
-                return false; 
+            if (regInvalidFileName.IsMatch(testName))
+            {
+                return false;
             }
 
             return true;
@@ -219,6 +333,8 @@ namespace MPData.ViewModels
         private void RaiseMessage(string message)
         {
             OnErrorMessageRaised?.Invoke(this, new MessageEventArgs(message));
-        }
+        } 
+
+        #endregion
     }
 }

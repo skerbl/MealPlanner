@@ -1,10 +1,14 @@
-﻿namespace MPData.Models
+﻿namespace MPData
 {
     public class Meal : BaseNotificationClass
     {
+        #region Public Properties
+
         public string Starter { get; set; }
         public string MainDish { get; set; }
         public string SideDish { get; set; }
+
+        #endregion
 
         public Meal(string starter, string mainDish, string sideDish)
         {

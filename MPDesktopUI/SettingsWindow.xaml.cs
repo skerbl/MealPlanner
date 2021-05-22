@@ -1,8 +1,5 @@
-﻿using MPData.ViewModels;
-using MPData.Settings;
+﻿using MPData;
 using System.Windows;
-using System.Windows.Controls;
-using Ookii.Dialogs;
 
 namespace MPDesktopUI
 {
@@ -19,10 +16,11 @@ namespace MPDesktopUI
             InitializeComponent();
 
             _mainViewModel = mainViewModel;
-            _oldSettings = new UserSettings 
-            { 
-                ExportPath = _mainViewModel.Settings.ExportPath, 
-                TemplatePath = _mainViewModel.Settings.TemplatePath 
+            _oldSettings = new UserSettings
+            {
+                ExportPath = _mainViewModel.Settings.ExportPath,
+                TemplatePath = _mainViewModel.Settings.TemplatePath,
+                SaveAsPdf = _mainViewModel.Settings.SaveAsPdf
             };
         }
 
