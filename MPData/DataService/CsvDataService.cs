@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MPData
 {
@@ -30,20 +31,23 @@ namespace MPData
                     itemList.Sort();
                 }
 
+                // Remove duplicates just in case
+                List<string> uniqueList = itemList.Distinct().ToList();
+
                 switch (dishType)
                 {
                     case DishType.Starters:
-                        _starters = itemList;
+                        _starters = uniqueList;
                         break;
                     case DishType.MainDishes:
-                        _mainDishes = itemList;
+                        _mainDishes = uniqueList;
                         break;
                     case DishType.SideDishes:
-                        _sideDishes = itemList;
+                        _sideDishes = uniqueList;
                         break;
                 }
 
-                foreach (var item in itemList)
+                foreach (var item in uniqueList)
                 {
                     yield return item;
                 }

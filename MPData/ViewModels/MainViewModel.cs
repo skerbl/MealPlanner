@@ -17,6 +17,7 @@ namespace MPData
         private string _fromDate;
         private string _fileName;
         private string _selectedItem;
+        private int _selectedTabIndex;
         private DishType _selectedType;
 
         #endregion
@@ -40,8 +41,13 @@ namespace MPData
 
         public Dictionary<string, Meal> Meals { get; set; }
 
+        /*
         public MealListViewModel MealList1 { get; set; }
         public MealListViewModel MealList2 { get; set; }
+        */
+
+        public List<MealViewModel> MealList1 { get; set; }
+        public List<MealViewModel> MealList2 { get; set; }
 
         public string SelectedItem
         {
@@ -49,10 +55,21 @@ namespace MPData
             set
             {
                 _selectedItem = value;
-                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, _selectedType));
                 OnPropertyChanged();
             }
         }
+
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set 
+            { 
+                _selectedTabIndex = value;
+                SelectedType = (DishType)value;
+            }
+        }
+
 
         public DishType SelectedType
         {
@@ -60,7 +77,7 @@ namespace MPData
             set
             {
                 _selectedType = value;
-                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, DishType.Starters));
+                SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(_selectedItem, _selectedType));
                 OnPropertyChanged();
             }
         }
@@ -282,16 +299,36 @@ namespace MPData
 
         private void InitializeViewModels()
         {
+            /*
             MealList1 = new MealListViewModel();
             MealList2 = new MealListViewModel();
+            */
+            MealList1 = new List<MealViewModel>()
+            {
+                new MealViewModel() { Weekday = "Montag" },
+                new MealViewModel() { Weekday = "Dienstag" },
+                new MealViewModel() { Weekday = "Mittwoch" },
+                new MealViewModel() { Weekday = "Donnerstag" },
+                new MealViewModel() { Weekday = "Freitag" },
+                new MealViewModel() { Weekday = "Samstag" }
+            };
 
-            foreach (var meal in MealList1.Meals)
+            MealList2 = new List<MealViewModel>()
+            {
+                new MealViewModel() { Weekday = "Montag" },
+                new MealViewModel() { Weekday = "Dienstag" },
+                new MealViewModel() { Weekday = "Mittwoch" },
+                new MealViewModel() { Weekday = "Donnerstag" },
+                new MealViewModel() { Weekday = "Freitag" }
+            };
+
+            foreach (var meal in MealList1)
             {
                 SelectionChanged += meal.OnSelectionChanged;
             }
 
-            MealList2.Meals.RemoveAll(x => x.Weekday == "Samstag"); 
-            foreach (var meal in MealList2.Meals)
+            //MealList2.Meals.RemoveAll(x => x.Weekday == "Samstag"); 
+            foreach (var meal in MealList2)
             {
                 SelectionChanged += meal.OnSelectionChanged;
             }

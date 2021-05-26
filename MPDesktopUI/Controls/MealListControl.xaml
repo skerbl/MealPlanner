@@ -12,7 +12,28 @@
         <viewModels:MealListViewModel />
     </UserControl.DataContext>
     <Grid Background="White">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <ScrollViewer Grid.Column="0" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Hidden">
+            
+            <ItemsControl ItemsSource="{Binding Meals}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:MealControl />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Column="1" 
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Hidden">
+
             <ItemsControl ItemsSource="{Binding Meals}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
