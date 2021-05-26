@@ -56,6 +56,15 @@ namespace MPData
 
         #endregion
 
+        #region Public Methods
+
+        public Meal ConvertToMeal()
+        {
+            return new Meal(Starter, MainDish, SideDish);
+        }
+
+        #endregion
+
         #region Event Handlers
 
         [SuppressPropertyChangedWarnings]

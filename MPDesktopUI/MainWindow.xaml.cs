@@ -27,13 +27,6 @@ namespace MPDesktopUI
             DataContext = _mainViewModel;
         }
 
-        private void OnClick_AddDishToMeal(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;
-            TabItem ti = selectionTabs.SelectedItem as TabItem;
-            _mainViewModel.AddDishToMeal(btn.Name, ti.Name);
-        }
-
         private void OnClick_AddNewDishItem(object sender, RoutedEventArgs e)
         {
             TabItem ti = selectionTabs.SelectedItem as TabItem;

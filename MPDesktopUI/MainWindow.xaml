@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MPDesktopUI"
         xmlns:viewModels="clr-namespace:MPData;assembly=MPData"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
         mc:Ignorable="d"
@@ -27,6 +28,17 @@
             <TextBox Text="{Binding NewItem}" FontSize="14" />
             <Button Grid.Column="1" Width="100" HorizontalAlignment="Left" FontSize="14"
                     Content="Hinzufügen" Click="OnClick_AddNewDishItem" />
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+
+                <TextBox Grid.Column="0" Width="200" 
+                                 TextAlignment="Right" VerticalAlignment="Center" 
+                                 Text="{Binding FileName}" FontSize="15" />
+                <Button Grid.Column="1" Name="SaveAsExcel" Content="Speichern"
+                                FontSize="14" FontWeight="Bold" Padding="15 2" 
+                                Command="{Binding SaveCommand}" />
+            </StackPanel>
         </Grid>
         
         <Grid>
@@ -35,7 +47,8 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <TabControl Grid.Column="0" x:Name="selectionTabs" FontSize="15" >
+            <TabControl Grid.Column="0" x:Name="selectionTabs" FontSize="15" 
+                        SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
                 <TabItem Header="Suppen" Name="starters">
                     <Border BorderBrush="AliceBlue" BorderThickness="1">
                         <ListView x:Name="ListSoups" FontSize="17"
@@ -74,355 +87,31 @@
                     <TextBox Width="100" Text="{Binding ToDate}" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
 
-                <!-- Monday -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Montag" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14" />
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Monday_1" Content=">"
-                                    FontSize="18" FontWeight="Bold"
-                                    Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Monday_1].Starter}" />
-                                <TextBox Text="{Binding Meals[Monday_1].MainDish}" />
-                                <TextBox Text="{Binding Meals[Monday_1].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" >
-                        <Label Content="Menü 2" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Monday_2" Content=">"
-                                    FontSize="18" FontWeight="Bold"
-                                    Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Monday_2].Starter}" />
-                                <TextBox Text="{Binding Meals[Monday_2].MainDish}" />
-                                <TextBox Text="{Binding Meals[Monday_2].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                
-                <Rectangle HorizontalAlignment="Stretch" Fill="DarkGray" Height="3"/>
-
-                <!-- Tuesday -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Dienstag" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Tuesday_1" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Tuesday_1].Starter}" />
-                                <TextBox Text="{Binding Meals[Tuesday_1].MainDish}" />
-                                <TextBox Text="{Binding Meals[Tuesday_1].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" >
-                        <Label Content="Menü 2" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Tuesday_2" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Tuesday_2].Starter}" />
-                                <TextBox Text="{Binding Meals[Tuesday_2].MainDish}" />
-                                <TextBox Text="{Binding Meals[Tuesday_2].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                
-                <Rectangle HorizontalAlignment="Stretch" Fill="DarkGray" Height="3"/>
-
-                <!-- Wednesday -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Mittwoch" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Wednesday_1" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Wednesday_1].Starter}" />
-                                <TextBox Text="{Binding Meals[Wednesday_1].MainDish}" />
-                                <TextBox Text="{Binding Meals[Wednesday_1].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" >
-                        <Label Content="Menü 2" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Wednesday_2" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Wednesday_2].Starter}" />
-                                <TextBox Text="{Binding Meals[Wednesday_2].MainDish}" />
-                                <TextBox Text="{Binding Meals[Wednesday_2].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-                
-                <Rectangle HorizontalAlignment="Stretch" Fill="DarkGray" Height="3"/>
-
-                <!-- Thursday -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Donnerstag" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Thursday_1" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Thursday_1].Starter}" />
-                                <TextBox Text="{Binding Meals[Thursday_1].MainDish}" />
-                                <TextBox Text="{Binding Meals[Thursday_1].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" >
-                        <Label Content="Menü 2" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Thursday_2" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Thursday_2].Starter}" />
-                                <TextBox Text="{Binding Meals[Thursday_2].MainDish}" />
-                                <TextBox Text="{Binding Meals[Thursday_2].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-
-                <Rectangle HorizontalAlignment="Stretch" Fill="DarkGray" Height="3"/>
-
-                <!-- Friday -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Freitag" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Friday_1" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Friday_1].Starter}" />
-                                <TextBox Text="{Binding Meals[Friday_1].MainDish}" />
-                                <TextBox Text="{Binding Meals[Friday_1].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" >
-                        <Label Content="Menü 2" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Friday_2" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Friday_2].Starter}" />
-                                <TextBox Text="{Binding Meals[Friday_2].MainDish}" />
-                                <TextBox Text="{Binding Meals[Friday_2].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
-
-                <Rectangle HorizontalAlignment="Stretch" Fill="DarkGray" Height="3"/>
-
-                <!-- Saturday -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Samstag" Padding="5 0"
-                               Grid.Column="0" Grid.ColumnSpan="2"  
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold" FontSize="14"/>
-
-                    <StackPanel Grid.Column="0" >
-                        <Label Content="Menü 1" HorizontalAlignment="Center"
-                                     FontSize="14" FontWeight="Bold" Padding="0"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="6*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Name="Saturday" Content=">"
-                                        FontSize="18" FontWeight="Bold"
-                                        Click="OnClick_AddDishToMeal" />
-
-                            <StackPanel Grid.Column="1" Orientation="Vertical">
-
-                                <TextBox Text="{Binding Meals[Saturday].Starter}" />
-                                <TextBox Text="{Binding Meals[Saturday].MainDish}" />
-                                <TextBox Text="{Binding Meals[Saturday].SideDish}" />
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" 
-                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
-
-                        <TextBox Grid.Column="0" Width="200" 
-                                 TextAlignment="Right" VerticalAlignment="Center" 
-                                 Text="{Binding FileName}" FontSize="15" />
-                        <Button Grid.Column="1" Name="SaveAsExcel" Content="Speichern"
-                                FontSize="14" FontWeight="Bold" Padding="15 2" 
-                                Command="{Binding SaveCommand}" />
-                    </StackPanel>
+                    <Grid.Resources>
+                        <DataTemplate DataType="{x:Type viewModels:MealViewModel}">
+                            <local:MealControl />
+                        </DataTemplate>
+                    </Grid.Resources>
+
+                    <ScrollViewer Grid.Column="0" 
+                                  HorizontalScrollBarVisibility="Hidden" 
+                                  VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl ItemsSource="{Binding MealList1}" />
+                    </ScrollViewer>
+                    
+                    <ScrollViewer Grid.Column="1" 
+                                  HorizontalScrollBarVisibility="Hidden" 
+                                  VerticalScrollBarVisibility="Auto">
+
+                        <ItemsControl ItemsSource="{Binding MealList2}" />
+                    </ScrollViewer>
                 </Grid>
 
                 
