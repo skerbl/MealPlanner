@@ -12,7 +12,7 @@
             BorderBrush="Black"
             CornerRadius="15"
             Background="AliceBlue"
-            >
+            Margin="2 1">
         <StackPanel>
             <TextBlock Text="{Binding Weekday}" HorizontalAlignment="Center"
                        FontSize="14" FontWeight="Bold" Padding="0"/>

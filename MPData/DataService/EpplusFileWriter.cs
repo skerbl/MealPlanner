@@ -18,18 +18,19 @@ namespace MPData
             }
         }
 
-
         private string _templateFileName = "MenüplanVorlage.xlsm";
         private FileInfo _templateFile;
-        private Dictionary<string, List<string>> _cellLocations;
+        private List<List<string>> _cellList1;
+        private List<List<string>> _cellList2;
 
         public EpplusFileWriter()
         {
-            _cellLocations = new Dictionary<string, List<string>>();
+            _cellList1 = new List<List<string>>();
+            _cellList2 = new List<List<string>>();
             InitializeCellLocations();
         }
 
-        public void WriteToFile(Dictionary<string, Meal> meals, string fromDate, string toDate, string fileName)
+        public void WriteToFile(List<Meal> mealList1, List<Meal> mealList2, string fromDate, string toDate, string fileName)
         {
             FileInfo newFile = new FileInfo(@fileName);
             if (newFile.Exists)
@@ -44,9 +45,14 @@ namespace MPData
                 worksheet.Cells["C18"].Value = fromDate;
                 worksheet.Cells["C20"].Value = toDate;
 
-                foreach (KeyValuePair<string, Meal> meal in meals)
+                for (int i = 0; i < mealList1.Count; i++)
                 {
-                    WriteMeal(worksheet, meal.Value, _cellLocations[meal.Key]);
+                    WriteMeal(worksheet, mealList1[i], _cellList1[i]);
+                }
+
+                for (int i = 0; i < mealList2.Count; i++)
+                {
+                    WriteMeal(worksheet, mealList2[i], _cellList2[i]);
                 }
 
                 worksheet.PrinterSettings.PrintArea = worksheet.Cells["B2:L90"];
@@ -62,27 +68,20 @@ namespace MPData
             worksheet.Cells[cellLocations[2]].Value = meal.SideDish;
         }
 
-        private void WriteTestCells(ExcelWorksheet worksheet)
-        {
-            worksheet.Cells["A1"].Value = "test";
-            worksheet.Cells["C3"].Value = "test";
-            worksheet.Cells["E5"].Value = "test";
-            worksheet.Cells["G7"].Value = "test";
-        }
-
         private void InitializeCellLocations()
         {
-            _cellLocations.Add("Monday_1", new List<string> { "C31", "C33", "C35" });
-            _cellLocations.Add("Monday_2", new List<string> { "H31", "H33", "H35" });
-            _cellLocations.Add("Tuesday_1", new List<string> { "C39", "C41", "C43" });
-            _cellLocations.Add("Tuesday_2", new List<string> { "H39", "H41", "H43" });
-            _cellLocations.Add("Wednesday_1", new List<string> { "C47", "C49", "C51" });
-            _cellLocations.Add("Wednesday_2", new List<string> { "H47", "H49", "H51" });
-            _cellLocations.Add("Thursday_1", new List<string> { "C55", "C57", "C59" });
-            _cellLocations.Add("Thursday_2", new List<string> { "H55", "H57", "H59" });
-            _cellLocations.Add("Friday_1", new List<string> { "C63", "C65", "C67" });
-            _cellLocations.Add("Friday_2", new List<string> { "H63", "H65", "H67" });
-            _cellLocations.Add("Saturday", new List<string> { "C71", "C73", "C75" });
+            _cellList1.Add(new List<string> { "C31", "C33", "C35" });
+            _cellList1.Add(new List<string> { "C39", "C41", "C43" });
+            _cellList1.Add(new List<string> { "C47", "C49", "C51" });
+            _cellList1.Add(new List<string> { "C55", "C57", "C59" });
+            _cellList1.Add(new List<string> { "C63", "C65", "C67" });
+            _cellList1.Add(new List<string> { "C71", "C73", "C75" });
+
+            _cellList2.Add(new List<string> { "H31", "H33", "H35" });
+            _cellList2.Add(new List<string> { "H39", "H41", "H43" });
+            _cellList2.Add(new List<string> { "H47", "H49", "H51" });
+            _cellList2.Add(new List<string> { "H55", "H57", "H59" });
+            _cellList2.Add(new List<string> { "H63", "H65", "H67" });
         }
     }
 }

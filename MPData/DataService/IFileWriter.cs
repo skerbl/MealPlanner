@@ -5,6 +5,6 @@ namespace MPData
     public interface IFileWriter
     {
         string TemplatePath { get; set; }
-        void WriteToFile(Dictionary<string, Meal> meals, string fromDate, string toDate, string fileName);
+        void WriteToFile(List<Meal> mealList1, List<Meal> mealList2, string fromDate, string toDate, string fileName);
     }
 }

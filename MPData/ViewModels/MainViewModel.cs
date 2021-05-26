@@ -39,8 +39,6 @@ namespace MPData
         public ObservableCollection<string> MainDishes { get; set; }
         public ObservableCollection<string> SideDishes { get; set; }
 
-        public Dictionary<string, Meal> Meals { get; set; }
-
         /*
         public MealListViewModel MealList1 { get; set; }
         public MealListViewModel MealList2 { get; set; }
@@ -135,34 +133,13 @@ namespace MPData
             MainDishes = new ObservableCollection<string>();
             SideDishes = new ObservableCollection<string>();
 
-            Meals = new Dictionary<string, Meal>();
-
             InitializeViewModels();
-            InitializeMeals();
             LoadDishes();
         }
 
         #endregion
 
         #region Public Methods
-
-        public void AddDishToMeal(string buttonName, string tabItemName)
-        {
-            switch (tabItemName)
-            {
-                case "starters":
-                    Meals[buttonName].Starter = SelectedItem;
-                    break;
-                case "mainDishes":
-                    Meals[buttonName].MainDish = SelectedItem;
-                    break;
-                case "sideDishes":
-                    Meals[buttonName].SideDish = SelectedItem;
-                    break;
-                default:
-                    break;
-            }
-        }
 
         public void AddNewDishItem(string tabItemName)
         {
@@ -276,7 +253,20 @@ namespace MPData
         {
             file.Directory.Create();
 
-            _excelFileWriter.WriteToFile(Meals, FromDate, ToDate, file.FullName);
+            List<Meal> meals1 = new List<Meal>();
+            List<Meal> meals2 = new List<Meal>();
+
+            foreach (var meal in MealList1)
+            {
+                meals1.Add(meal.ConvertToMeal());
+            }
+
+            foreach (var meal in MealList2)
+            {
+                meals2.Add(meal.ConvertToMeal());
+            }
+
+            _excelFileWriter.WriteToFile(meals1, meals2, FromDate, ToDate, file.FullName);
         }
 
         private void SaveAsPdf(FileInfo file)
@@ -299,10 +289,6 @@ namespace MPData
 
         private void InitializeViewModels()
         {
-            /*
-            MealList1 = new MealListViewModel();
-            MealList2 = new MealListViewModel();
-            */
             MealList1 = new List<MealViewModel>()
             {
                 new MealViewModel() { Weekday = "Montag" },
@@ -332,21 +318,6 @@ namespace MPData
             {
                 SelectionChanged += meal.OnSelectionChanged;
             }
-        }
-
-        private void InitializeMeals()
-        {
-            Meals.Add("Monday_1", new Meal());
-            Meals.Add("Monday_2", new Meal());
-            Meals.Add("Tuesday_1", new Meal());
-            Meals.Add("Tuesday_2", new Meal());
-            Meals.Add("Wednesday_1", new Meal());
-            Meals.Add("Wednesday_2", new Meal());
-            Meals.Add("Thursday_1", new Meal());
-            Meals.Add("Thursday_2", new Meal());
-            Meals.Add("Friday_1", new Meal());
-            Meals.Add("Friday_2", new Meal());
-            Meals.Add("Saturday", new Meal());
         }
 
         private void CloseApplication()
