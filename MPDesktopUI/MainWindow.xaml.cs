@@ -1,10 +1,6 @@
 ﻿using MPData;
-using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Xps.Packaging;
 
 namespace MPDesktopUI
 {
@@ -16,6 +12,7 @@ namespace MPDesktopUI
         private readonly IDishItemDataService _dishItemDataService;
         private readonly IFileWriter _excelFileWriter;
         private readonly MainViewModel _mainViewModel;
+        private readonly XamlToPdf _xamlToPdfWriter;
 
         public MainWindow()
         {
@@ -24,9 +21,11 @@ namespace MPDesktopUI
             _dishItemDataService = new CsvDataService();
             _excelFileWriter = new EpplusFileWriter();
             _mainViewModel = new MainViewModel(_dishItemDataService, _excelFileWriter);
+            _xamlToPdfWriter = new XamlToPdf(_mainViewModel);
 
             _mainViewModel.OnErrorMessageRaised += OnErrorMessageRaised;
             _dishItemDataService.OnErrorMessageRaised += OnErrorMessageRaised;
+            _xamlToPdfWriter.OnErrorMessageRaised += OnErrorMessageRaised;
 
             DataContext = _mainViewModel;
         }
@@ -39,42 +38,7 @@ namespace MPDesktopUI
 
         private void OnClick_SaveAsPdf(object sender, RoutedEventArgs e)
         {
-            //Set up the WPF Control to be printed
-            XamlToPdfTest controlToPrint;
-            controlToPrint = new XamlToPdfTest
-            {
-                DataContext = _mainViewModel
-            };
-
-            FixedDocument fixedDoc = new FixedDocument();
-            PageContent pageContent = new PageContent();
-            FixedPage fixedPage = new FixedPage();
-
-            //Create first page of document
-            fixedPage.Children.Add(controlToPrint);
-            ((System.Windows.Markup.IAddChild)pageContent).AddChild(fixedPage);
-            fixedDoc.Pages.Add(pageContent);
-
-            // Configure save file dialog box
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "XamlToPdfTest"; // Default file name
-            dlg.DefaultExt = ".xps"; // Default file extension
-            dlg.Filter = "XPS Documents (.xps)|*.xps"; // Filter files by extension
-
-            // Show save file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process save file dialog box results
-            if (result == true)
-            {
-                // Save document
-                string filename = dlg.FileName;
-
-                XpsDocument xpsd = new XpsDocument(filename, FileAccess.ReadWrite);
-                System.Windows.Xps.XpsDocumentWriter xw = XpsDocument.CreateXpsDocumentWriter(xpsd);
-                xw.Write(fixedDoc);
-                xpsd.Close();
-            }
+            _xamlToPdfWriter.SaveAsPdf();
         }
 
         private void Menu_Settings(object sender, RoutedEventArgs e)

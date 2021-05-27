@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MPData
 {
@@ -15,6 +17,19 @@ namespace MPData
                 if (hasPredecessor && predecessor.CompareTo(x) >= 0) return false;
                 predecessor = x;
                 hasPredecessor = true;
+            }
+
+            return true;
+        }
+
+        public static bool IsValidFilename(string testName)
+        {
+            string strTheseAreInvalidFileNameChars = new string(Path.GetInvalidFileNameChars());
+            Regex regInvalidFileName = new Regex("[" + Regex.Escape(strTheseAreInvalidFileNameChars) + "]");
+
+            if (regInvalidFileName.IsMatch(testName))
+            {
+                return false;
             }
 
             return true;

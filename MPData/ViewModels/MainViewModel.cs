@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
-using System.Diagnostics;
 
 namespace MPData
 {
@@ -141,6 +139,10 @@ namespace MPData
 
         #region Public Methods
 
+        /// <summary>
+        /// Adds a new dish item to the respective list
+        /// </summary>
+        /// <param name="tabItemName">The name of the tab item</param>
         public void AddNewDishItem(string tabItemName)
         {
             if (string.IsNullOrWhiteSpace(NewItem))
@@ -175,10 +177,11 @@ namespace MPData
 
         #region Private Methods
 
+        /// <summary>
+        /// Loads all dish items from the data source (currently csv files).
+        /// </summary>
         private void LoadDishes()
         {
-            //_dishItemDataService.OpenConnection();
-
             var soups = _dishItemDataService.GetAll(DishType.Starters);
             Starters.Clear();
             foreach (var soup in soups)
@@ -199,10 +202,12 @@ namespace MPData
             {
                 SideDishes.Add(side);
             }
-
-            //_dishItemDataService.CloseConnection();
         }
 
+        /// <summary>
+        /// Saves the selected meal data in various file formats. Currently only
+        /// saves .xlsx, because .pdf has to be handled differently
+        /// </summary>
         private void SaveFiles()
         {
             if (string.IsNullOrEmpty(FileName))
@@ -211,7 +216,7 @@ namespace MPData
                 return;
             }
 
-            if (!IsValidFilename(FileName))
+            if (!Utils.IsValidFilename(FileName))
             {
                 RaiseMessage("Der Dateiname ist ungültig.");
                 FileName = "";
@@ -223,32 +228,32 @@ namespace MPData
 
             SaveAsExcel(file);
 
-            if (Settings.SaveAsPdf)
-            {
-                if (!file.Exists)
-                {
-                    return;
-                }
-
-                FileInfo officeToPdf = new FileInfo("OfficeToPDF.exe");
-                if (officeToPdf.Exists)
-                {
-                    ProcessStartInfo startInfo = new ProcessStartInfo();
-                    startInfo.FileName = @"OfficeToPDF.exe";
-                    startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
-                    Process.Start(startInfo);
-                }
-                else
-                {
-                    RaiseMessage("Konnte nicht als PDF speichern.\nDatei \"OfficeToPDF.exe\" nicht gefunden.");
-                }
-
-
-                // TODO: Save as PDF in another way?
-                //SaveAsPdf(file);
-            }
+            //if (Settings.SaveAsPdf)
+            //{
+            //    if (!file.Exists)
+            //    {
+            //        return;
+            //    }
+            //
+            //    FileInfo officeToPdf = new FileInfo("OfficeToPDF.exe");
+            //    if (officeToPdf.Exists)
+            //    {
+            //        ProcessStartInfo startInfo = new ProcessStartInfo();
+            //        startInfo.FileName = @"OfficeToPDF.exe";
+            //        startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
+            //        Process.Start(startInfo);
+            //    }
+            //    else
+            //    {
+            //        RaiseMessage("Konnte nicht als PDF speichern.\nDatei \"OfficeToPDF.exe\" nicht gefunden.");
+            //    }
+            //}
         }
 
+        /// <summary>
+        /// Saves the selected meal data as a .xlsx file.
+        /// </summary>
+        /// <param name="file">The file</param>
         private void SaveAsExcel(FileInfo file)
         {
             file.Directory.Create();
@@ -269,24 +274,9 @@ namespace MPData
             _excelFileWriter.WriteToFile(meals1, meals2, FromDate, ToDate, file.FullName);
         }
 
-        private void SaveAsPdf(FileInfo file)
-        {
-            //Workbook workbook = new Workbook();
-            //workbook.LoadFromFile(file.FullName);
-            //
-            //Worksheet sheet = workbook.Worksheets[0];
-            //
-            //sheet.PageSetup.PaperSize = PaperSizeType.PaperA4;
-            //sheet.PageSetup.FitToPagesWide = 1;
-            //sheet.PageSetup.FitToPagesTall = 1;
-            //sheet.PageSetup.TopMargin = 0.5;
-            //sheet.PageSetup.LeftMargin = 0.5;
-            //sheet.PageSetup.RightMargin = 0.5;
-            //sheet.PageSetup.BottomMargin = 0.5;
-            //
-            //sheet.SaveToPdf(Path.ChangeExtension(file.FullName, ".pdf"));
-        }
-
+        /// <summary>
+        /// Sets up the <see cref="MealViewModel"/>.
+        /// </summary>
         private void InitializeViewModels()
         {
             MealList1 = new List<MealViewModel>()
@@ -322,20 +312,7 @@ namespace MPData
 
         private void CloseApplication()
         {
-
-        }
-
-        private bool IsValidFilename(string testName)
-        {
-            string strTheseAreInvalidFileNameChars = new string(Path.GetInvalidFileNameChars());
-            Regex regInvalidFileName = new Regex("[" + Regex.Escape(strTheseAreInvalidFileNameChars) + "]");
-
-            if (regInvalidFileName.IsMatch(testName))
-            {
-                return false;
-            }
-
-            return true;
+            throw new NotImplementedException();
         }
 
         private void RaiseMessage(string message)

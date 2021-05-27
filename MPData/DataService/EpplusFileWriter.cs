@@ -6,22 +6,31 @@ namespace MPData
 {
     public class EpplusFileWriter : IFileWriter
     {
+        #region Private Members
+
+        private readonly string _templateFileName = "MenüplanVorlage.xlsm";
         private string _templatePath;
+        private FileInfo _templateFile;
+        private List<List<string>> _cellList1;
+        private List<List<string>> _cellList2;
+
+        #endregion
+
+        #region Public Properties
 
         string IFileWriter.TemplatePath
         {
             get => _templatePath;
-            set 
-            { 
+            set
+            {
                 _templatePath = value;
                 _templateFile = new FileInfo(Path.Combine(_templatePath, _templateFileName));
             }
         }
 
-        private string _templateFileName = "MenüplanVorlage.xlsm";
-        private FileInfo _templateFile;
-        private List<List<string>> _cellList1;
-        private List<List<string>> _cellList2;
+        #endregion
+
+        #region Constructor
 
         public EpplusFileWriter()
         {
@@ -30,6 +39,18 @@ namespace MPData
             InitializeCellLocations();
         }
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Writes the data coming from the ViewModels to a .xlsx file.
+        /// </summary>
+        /// <param name="mealList1">The first meal list</param>
+        /// <param name="mealList2">The second meal list</param>
+        /// <param name="fromDate">From date</param>
+        /// <param name="toDate">To date</param>
+        /// <param name="fileName">The name of the file</param>
         public void WriteToFile(List<Meal> mealList1, List<Meal> mealList2, string fromDate, string toDate, string fileName)
         {
             FileInfo newFile = new FileInfo(@fileName);
@@ -61,6 +82,16 @@ namespace MPData
             }
         }
 
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Writes a single meal to the specified cell locations
+        /// </summary>
+        /// <param name="worksheet">The worksheet</param>
+        /// <param name="meal">The meal</param>
+        /// <param name="cellLocations">A list of cells</param>
         private void WriteMeal(ExcelWorksheet worksheet, Meal meal, List<string> cellLocations)
         {
             worksheet.Cells[cellLocations[0]].Value = meal.Starter;
@@ -68,6 +99,9 @@ namespace MPData
             worksheet.Cells[cellLocations[2]].Value = meal.SideDish;
         }
 
+        /// <summary>
+        /// Sets up the cell locations for all meals in both lists
+        /// </summary>
         private void InitializeCellLocations()
         {
             _cellList1.Add(new List<string> { "C31", "C33", "C35" });
@@ -82,6 +116,8 @@ namespace MPData
             _cellList2.Add(new List<string> { "H47", "H49", "H51" });
             _cellList2.Add(new List<string> { "H55", "H57", "H59" });
             _cellList2.Add(new List<string> { "H63", "H65", "H67" });
-        }
+        } 
+
+        #endregion
     }
 }

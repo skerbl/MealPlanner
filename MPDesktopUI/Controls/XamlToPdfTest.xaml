@@ -12,12 +12,24 @@
                 BorderThickness="2"
                 Margin="1.25cm">
 
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1">
+                    <Image Source="/Images/wk01.png" />
+                </StackPanel>
+            </Grid>
+            <!--
             <StackPanel HorizontalAlignment="Center"
                        VerticalAlignment="Center" >
                 
                 <TextBlock Text="PDF Test"/>
                 <TextBlock Text="{Binding MealList1[0].Starter}" />
             </StackPanel>
+            -->
         </Border>
     </Grid>
 </UserControl>

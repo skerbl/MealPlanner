@@ -33,6 +33,9 @@ namespace MPData
 
         #region Private Methods
 
+        /// <summary>
+        /// Adds or changes an item
+        /// </summary>
         private void AddItem()
         {
             switch (_selectedType)
@@ -58,6 +61,10 @@ namespace MPData
 
         #region Public Methods
 
+        /// <summary>
+        /// Converts this MealVieModel to a Meal
+        /// </summary>
+        /// <returns>A <see cref="Meal"/></returns>
         public Meal ConvertToMeal()
         {
             return new Meal(Starter, MainDish, SideDish);

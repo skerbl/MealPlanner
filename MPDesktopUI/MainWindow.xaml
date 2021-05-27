@@ -38,7 +38,7 @@
                 <Button Name="SaveAsExcel" Content="Speichern"
                         FontSize="14" FontWeight="Bold" Padding="15 2" 
                         Command="{Binding SaveCommand}" />
-                <Button Name="SaveAsPdf" Content="XPS speichern"
+                <Button Name="SaveAsPdf" Content="PDF speichern"
                         FontSize="14" Padding="15 2" 
                         Click="OnClick_SaveAsPdf"/>
             </StackPanel>
