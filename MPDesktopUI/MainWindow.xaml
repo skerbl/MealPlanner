@@ -30,14 +30,17 @@
                     Content="Hinzufügen" Click="OnClick_AddNewDishItem" />
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" 
-                                HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
 
-                <TextBox Grid.Column="0" Width="200" 
-                                 TextAlignment="Right" VerticalAlignment="Center" 
-                                 Text="{Binding FileName}" FontSize="15" />
-                <Button Grid.Column="1" Name="SaveAsExcel" Content="Speichern"
-                                FontSize="14" FontWeight="Bold" Padding="15 2" 
-                                Command="{Binding SaveCommand}" />
+                <TextBox Width="200" 
+                         TextAlignment="Right" VerticalAlignment="Center" 
+                         Text="{Binding FileName}" FontSize="15" />
+                <Button Name="SaveAsExcel" Content="Speichern"
+                        FontSize="14" FontWeight="Bold" Padding="15 2" 
+                        Command="{Binding SaveCommand}" />
+                <Button Name="SaveAsPdf" Content="XPS speichern"
+                        FontSize="14" Padding="15 2" 
+                        Click="OnClick_SaveAsPdf"/>
             </StackPanel>
         </Grid>
         

@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="MPDesktopUI.XamlToPdfTest"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MPDesktopUI"
+             mc:Ignorable="d" 
+             Height="29.7cm" Width="21cm">
+    
+    <Grid Background="White">
+        <Border BorderBrush="Black"
+                BorderThickness="2"
+                Margin="1.25cm">
+
+            <StackPanel HorizontalAlignment="Center"
+                       VerticalAlignment="Center" >
+                
+                <TextBlock Text="PDF Test"/>
+                <TextBlock Text="{Binding MealList1[0].Starter}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
