@@ -7,12 +7,23 @@ namespace MPData
 {
     public class CsvDataService : IDishItemDataService
     {
+        #region Private Members
+
         private List<string> _starters;
         private List<string> _mainDishes;
-        private List<string> _sideDishes;
+        private List<string> _sideDishes; 
+
+        #endregion
 
         public event EventHandler<MessageEventArgs> OnErrorMessageRaised;
 
+        #region Public Methods
+
+        /// <summary>
+        /// Gets all dish items of a dish type
+        /// </summary>
+        /// <param name="dishType">The type of dish</param>
+        /// <returns>A list of dish items</returns>
         public IEnumerable<string> GetAll(DishType dishType)
         {
             string fileName = dishType.ToString().ToLower() + ".csv";
@@ -54,6 +65,13 @@ namespace MPData
             }
         }
 
+        /// <summary>
+        /// Adds an item to the respective item type's list.
+        /// Writes the new list back to the respective csv file.
+        /// </summary>
+        /// <param name="newItem">The new dish item</param>
+        /// <param name="dishType">The type of the dish item</param>
+        /// <returns>The new list</returns>
         public IEnumerable<string> AddItem(string newItem, DishType dishType)
         {
             string fileName = dishType.ToString().ToLower() + ".csv";
@@ -95,21 +113,33 @@ namespace MPData
             {
                 yield return item;
             }
-        }
+        } 
 
+        /// <summary>
+        /// Remove?
+        /// </summary>
         public void OpenConnection()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Remove?
+        /// </summary>
         public void CloseConnection()
         {
             throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region Private Methods
+
         private void RaiseMessage(string message)
         {
             OnErrorMessageRaised?.Invoke(this, new MessageEventArgs(message));
-        }
+        } 
+
+        #endregion
     }
 }

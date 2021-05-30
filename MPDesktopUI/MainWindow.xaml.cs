@@ -12,6 +12,7 @@ namespace MPDesktopUI
         private readonly IDishItemDataService _dishItemDataService;
         private readonly IFileWriter _excelFileWriter;
         private readonly MainViewModel _mainViewModel;
+        private readonly XamlToPdf _xamlToPdfWriter;
 
         public MainWindow()
         {
@@ -20,9 +21,11 @@ namespace MPDesktopUI
             _dishItemDataService = new CsvDataService();
             _excelFileWriter = new EpplusFileWriter();
             _mainViewModel = new MainViewModel(_dishItemDataService, _excelFileWriter);
+            _xamlToPdfWriter = new XamlToPdf(_mainViewModel);
 
             _mainViewModel.OnErrorMessageRaised += OnErrorMessageRaised;
             _dishItemDataService.OnErrorMessageRaised += OnErrorMessageRaised;
+            _xamlToPdfWriter.OnErrorMessageRaised += OnErrorMessageRaised;
 
             DataContext = _mainViewModel;
         }
@@ -31,6 +34,11 @@ namespace MPDesktopUI
         {
             TabItem ti = selectionTabs.SelectedItem as TabItem;
             _mainViewModel.AddNewDishItem(ti.Name);
+        }
+
+        private void OnClick_SaveAsPdf(object sender, RoutedEventArgs e)
+        {
+            _xamlToPdfWriter.SaveAsPdf();
         }
 
         private void Menu_Settings(object sender, RoutedEventArgs e)
