@@ -222,9 +222,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\wk01.png">
+    <Resource Include="Images\wk01.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

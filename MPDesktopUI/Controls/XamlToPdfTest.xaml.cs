@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using MPData;
+using System.Windows.Controls;
 
 namespace MPDesktopUI
 {
@@ -7,9 +8,11 @@ namespace MPDesktopUI
     /// </summary>
     public partial class XamlToPdfTest : UserControl
     {
-        public XamlToPdfTest()
+        public XamlToPdfTest(MainViewModel mainViewModel)
         {
             InitializeComponent();
+
+            this.DataContext = mainViewModel;
         }
     }
 }

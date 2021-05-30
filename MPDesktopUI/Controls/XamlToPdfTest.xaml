@@ -4,32 +4,460 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MPDesktopUI"
+             xmlns:viewModels="clr-namespace:MPData;assembly=MPData"
              mc:Ignorable="d" 
-             Height="29.7cm" Width="21cm">
+             Height="1122.432" Width="793.632">
     
     <Grid Background="White">
-        <Border BorderBrush="Black"
-                BorderThickness="2"
-                Margin="1.25cm">
+        
+        <!-- Printer Margin -->
+        <Border Margin="1.25cm">
 
+            <!-- Content -->
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="1">
-                    <Image Source="/Images/wk01.png" />
+                <!-- Header -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                    Margin="0 5 0 10">
+                            <TextBlock Text="Geöffnet:" Margin="0 0 10 0"
+                                       Style="{StaticResource TextBlockText}"/>
+                            <TextBlock Text="Mo - Sa" 
+                                       Style="{StaticResource TextBlockText}"
+                                       FontWeight="Bold"
+                                       TextDecorations="Underline"/>
+                        </StackPanel>
+
+                        <TextBlock Text="11:00 bis 15:00 Uhr und 18:00 bis 23:00 Uhr" 
+                                   Style="{StaticResource TextBlockText}"/>
+                        <TextBlock Text="Küche:" 
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"/>
+                        <TextBlock Text="11:00 bis 15:00 Uhr und 18:00 bis 23:00 Uhr" 
+                                   Style="{StaticResource TextBlockText}"/>
+                        <TextBlock Text="Feiertags von 11.00 bis 16.00 Uhr"
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"
+                                   Margin="0 10 0 5"/>
+                        <TextBlock Text="Küche von 11.00 bis 15.00 Uhr"
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"
+                                   Margin="40 0 0 5"/>
+                        <TextBlock Text="Sonntags geschlossen"
+                                   Style="{StaticResource TextBlockText}"
+                                   Margin="40 0 0 10"/>
+                        <TextBlock Text="Wochen-Menüplan"
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"
+                                   FontSize="20" Margin="0 0 0 5"/>
+
+                        <!-- From -->
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <TextBlock Text="von:"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource TextBlockTextBoldUnderline}"
+                                       FontSize="12"
+                                       Width="45"
+                                       Padding="10 0"/>
+                            <Border BorderThickness="0.5" BorderBrush="Black"
+                                    Width="200"
+                                    Padding="1">
+                                <TextBlock Text="{Binding FromDate}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20" FontWeight="Bold" TextDecorations="Underline" />
+                            </Border>
+                        </StackPanel>
+
+                        <!-- To -->
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 5">
+                            <TextBlock Text="bis:"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource TextBlockTextBoldUnderline}"
+                                       FontSize="12"
+                                       Width="45"
+                                       Padding="10 0"/>
+                            <Border BorderThickness="0.5" BorderBrush="Black"
+                                    Width="200"
+                                    Padding="1">
+                                <TextBlock Text="{Binding ToDate}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="20" FontWeight="Bold" TextDecorations="Underline" />
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                    <!-- Image -->
+                    <StackPanel Grid.Column="1">
+                        <Image Source="pack://application:,,,/MPDesktopUI;component/Images/wk01.png" Stretch="Uniform"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <!-- Meal 1 Header -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="Menü 1"
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"/>
+                        <Border BorderThickness="1" BorderBrush="Black"
+                                Padding="10 0"
+                                Margin="20 0">
+                            <TextBlock Text="€ 8,60" 
+                                       Style="{StaticResource TextBlockTextBold}"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Meal 2 Header -->
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+                        <TextBlock Text="Menü 2"
+                                   Style="{StaticResource TextBlockTextBoldUnderline}"/>
+                        <Border BorderThickness="1" BorderBrush="Black"
+                                Padding="10 0"
+                                Margin="20 0">
+                            <TextBlock Text="Mo-Do: € 7.60  /  Fr: € 8,60" 
+                                       Style="{StaticResource TextBlockTextBold}"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Monday -->
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               Text="Montag" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    
+                    <Border Grid.Column="0" Grid.Row="1"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[0].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[0].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[0].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Grid.Row="1"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList2[0].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList2[0].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList2[0].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Tuesday -->
+                    <TextBlock Grid.Row="2" Grid.Column="1"
+                               Text="Dienstag" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="0" Grid.Row="2"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[1].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[1].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[1].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Grid.Row="2"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList2[1].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList2[1].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList2[1].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Wednesday -->
+                    <TextBlock Grid.Row="3" Grid.Column="1"
+                               Text="Mittwoch" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="0" Grid.Row="3"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[2].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[2].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[2].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Grid.Row="3"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList2[2].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList2[2].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList2[2].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Thursday -->
+                    <TextBlock Grid.Row="4" Grid.Column="1"
+                               Text="Donnerstag" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="0" Grid.Row="4"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[3].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[3].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[3].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Grid.Row="4"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList2[3].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList2[3].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList2[3].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Friday -->
+                    <TextBlock Grid.Row="5" Grid.Column="1"
+                               Text="Freitag" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="0" Grid.Row="5"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[4].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[4].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[4].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Grid.Row="5"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList2[4].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList2[4].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList2[4].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Saturday -->
+                    <TextBlock Grid.Row="6" Grid.Column="1"
+                               Text="Samstag" 
+                               Style="{StaticResource TextBlockTextBold}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Border Grid.Column="0" Grid.Row="6"
+                            BorderThickness="0.5" BorderBrush="Black"
+                            Margin="0 10"
+                            Padding="0 5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding MealList1[5].Starter, FallbackValue=Vorspeise}" 
+                                       Style="{StaticResource DishItemText}"/>
+                            <TextBlock Grid.Row="1" 
+                                       Text="{Binding MealList1[5].MainDish, FallbackValue=Hauptspeise}" 
+                                       Style="{StaticResource TextMainDishes}"/>
+                            <TextBlock Grid.Row="2"
+                                       Text="{Binding MealList1[5].SideDish, FallbackValue=Beilage}" 
+                                       Style="{StaticResource DishItemText}"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Footer -->
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Werte Gäste!"
+                               Style="{StaticResource TextBlockText}"
+                               FontWeight="Bold"
+                               TextDecorations="Underline"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Style="{StaticResource TextBlockText}"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"
+                               TextAlignment="Center">
+                        Sollte Ihnen wider Erwarten keines dieser köstlichen Gerichte zusagen, wählen Sie bitte aus unserer reichhaltigen Speisekarte. Beilagen können selbstverständlich nach Wunsch variiert werden.
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                Margin="0 5 0 0">
+                        <TextBlock Text="Guten Appetit"
+                                   Style="{StaticResource TextBlockText}"
+                                   FontWeight="Bold" TextDecorations="Underline"
+                                   Margin="0 0 20 0"/>
+                        <TextBlock Text="wünschen Ihnen Jörg Wild und Team"
+                                   Style="{StaticResource TextBlockText}"
+                                   Margin="20 0 0 0"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
-            <!--
-            <StackPanel HorizontalAlignment="Center"
-                       VerticalAlignment="Center" >
-                
-                <TextBlock Text="PDF Test"/>
-                <TextBlock Text="{Binding MealList1[0].Starter}" />
-            </StackPanel>
-            -->
         </Border>
     </Grid>
 </UserControl>

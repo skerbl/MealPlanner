@@ -45,6 +45,12 @@ namespace MPDesktopUI
             }
 
             string tempFileName = "tempFile.xps";
+            FileInfo tempFile = new FileInfo(tempFileName);
+            if (tempFile.Exists)
+            {
+                tempFile.Delete();
+            }
+
             string combinedPath = Path.Combine(_mainViewModel.Settings.ExportPath, Path.GetFileName(_mainViewModel.FileName));
             FileInfo file = new FileInfo(combinedPath);
 
@@ -66,20 +72,16 @@ namespace MPDesktopUI
         {
             //Set up the WPF Control to be printed
             XamlToPdfTest controlToPrint;
-            controlToPrint = new XamlToPdfTest
-            {
-                DataContext = _mainViewModel
-            };
+            controlToPrint = new XamlToPdfTest(_mainViewModel);
 
             FixedDocument fixedDoc = new FixedDocument();
             PageContent pageContent = new PageContent();
             FixedPage fixedPage = new FixedPage();
 
-            //Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() => { }));
-            
             //Create first page of document
-            fixedPage.Width = 793.92;
-            fixedPage.Height = 1122.24;
+            // A4 = 210 x 297 mm = 8.267 x 11.692 inches = 793.632 * 1122.432 dots
+            fixedPage.Width = 793.632;
+            fixedPage.Height = 1122.432;
             fixedPage.Children.Add(controlToPrint);
             ((System.Windows.Markup.IAddChild)pageContent).AddChild(fixedPage);
             fixedDoc.Pages.Add(pageContent);

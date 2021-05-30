@@ -1,7 +1,34 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MPDesktopUI">
-    
-    
-    
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockText" >
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockTextBold" BasedOn="{StaticResource TextBlockText}" >
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextBlockTextBoldUnderline" BasedOn="{StaticResource TextBlockText}" >
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="DishItemText" BasedOn="{StaticResource TextBlockText}">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="TextMainDishes" BasedOn="{StaticResource DishItemText}" >
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+
 </ResourceDictionary>
