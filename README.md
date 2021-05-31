@@ -6,7 +6,8 @@ exported into a predefined and formatted Excel template. In addition to that, it
 
 The owner of the restaurant readily admits to "not being very good with computers" and not being particularly interested in 
 learning it at his age. As a result, some of the design requirements were to make the UI simple to use, and to not break his 
-existing workflow (convoluted as it may be).
+existing workflow (convoluted as it may be). Another requirement was to make it work on hardware that is practically ancient by 
+modern standards.
 
 ## Current state of the project
 
@@ -14,9 +15,19 @@ The project is essentially still a prototype. Nevertheless, the core functionali
 
 ## Planned improvements
 
-* Cleaner MVVM architecture (possibly through use of the Prism framework)
+* Cleaner MVVM architecture (possibly by useing the Prism framework)
 * IoC through Dependency Injection
 * Making data storage more robust by using JSON or SQlite (the current CSV files are more like a crutch)
 * Improving on generating the PDF files
 * Making the template accessible to the user (I'm currently using a XAML file, which is not very user friendly)
 * Improving the design of the UI (I'm not a good UI designer)
+
+## What motivated me to do this project?
+
+First and foremost, my motivation was to help. I just couldn't stand watching him struggle with his practically ancient laptop and his 
+multiple Excel spreadsheets that he used, copying and pasting strings from one file to the other, paying attention to not overwrite any
+formatting, etc. That prompted me to step in and make tho offer to create something to make it easier for him (free of charge of course). 
+I had been looking for a project to familiarize myself with the WPF framework for quite a while now, and this seemed like as good as any
+to get started. It also opens up the way for many more concepts for me to explore, including the MVVM architecture that is favoured by WPF, 
+Dependency Injection, and persistent data storage. And while this is not strictly speaking a CRUD application, it could be turned into one 
+with relative ease.
