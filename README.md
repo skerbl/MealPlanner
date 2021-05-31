@@ -5,7 +5,7 @@ the individual courses of a single meal and click them together for each day of 
 exported into a predefined and formatted Excel template. In addition to that, it can also be exported as a PDF file.
 
 The owner of the restaurant readily admits to "not being very good with computers" and not being particularly interested in 
-learning it at his age. As a result, some of the design requirements were to make the UI simple to use, and to not break his 
+learning these things at his age. As a result, some of the design requirements were to make the UI simple to use, and to not break his 
 existing workflow (convoluted as it may be). Another requirement was to make it work on hardware that is practically ancient by 
 modern standards.
 
