@@ -19,7 +19,7 @@ The project is essentially still a prototype. Nevertheless, the core functionali
 * IoC through Dependency Injection
 * Making data storage more robust by using JSON or SQlite (the current CSV files are more like a crutch)
 * Improving on generating the PDF files
-* Making the template accessible to the user (I'm currently using a XAML file, which is not very user friendly)
+* Making the PDF template accessible to the user (I'm currently using a XAML file, which is not very user friendly)
 * Improving the design of the UI (I'm not a good UI designer)
 
 ## What motivated me to do this project?
