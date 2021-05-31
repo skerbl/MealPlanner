@@ -6,8 +6,8 @@ exported into a predefined and formatted Excel template. In addition to that, it
 
 The owner of the restaurant readily admits to "not being very good with computers" and not being particularly interested in 
 learning these things at his age. As a result, some of the design requirements were to make the UI simple to use, and to not break his 
-existing workflow (convoluted as it may be). Another requirement was to make it work on hardware that is practically ancient by 
-modern standards.
+existing workflow (convoluted as it may be). This program simply provides a shortcut, while still leaving his old way of doing things intact. 
+Another requirement was to make it work on hardware that is practically ancient by modern standards.
 
 ## Current state of the project
 
