@@ -1,6 +1,6 @@
 # MealPlanner
 
-This program is being developed to help with creating weekly meal plans for a small restaurant. The program allows him to select 
+This program is being developed to help the owner of a small restaurant with creating his weekly meal plans. The program allows him to select 
 the individual courses of a single meal and click them together for each day of the week. The resulting meal plan can then be 
 exported into a predefined and formatted Excel template. In addition to that, it can also be exported as a PDF file.
 
