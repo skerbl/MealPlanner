@@ -4,8 +4,6 @@ using System.Windows.Documents;
 using System.Windows.Xps.Packaging;
 using PdfSharp.Xps;
 using System;
-using System.Windows.Threading;
-using System.Windows;
 
 namespace MPDesktopUI
 {
@@ -40,7 +38,6 @@ namespace MPDesktopUI
             if (!Utils.IsValidFilename(_mainViewModel.FileName))
             {
                 RaiseMessage("Der Dateiname ist ungültig.");
-                //_mainViewModel.FileName = "";
                 return;
             }
 

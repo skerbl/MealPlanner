@@ -1,6 +1,5 @@
 ﻿using MPData;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace MPDesktopUI
 {
@@ -28,12 +27,6 @@ namespace MPDesktopUI
             _xamlToPdfWriter.OnErrorMessageRaised += OnErrorMessageRaised;
 
             DataContext = _mainViewModel;
-        }
-
-        private void OnClick_AddNewDishItem(object sender, RoutedEventArgs e)
-        {
-            TabItem ti = selectionTabs.SelectedItem as TabItem;
-            _mainViewModel.AddNewDishItem(ti.Name);
         }
 
         private void OnClick_SaveAsPdf(object sender, RoutedEventArgs e)

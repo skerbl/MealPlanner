@@ -31,6 +31,7 @@ namespace MPData
 
         public ICommand SaveCommand { get; set; }
         public ICommand CloseCommand { get; set; }
+        public ICommand AddNewDishItemCommand { get; set; }
 
         public UserSettings Settings { get; set; }
         public ObservableCollection<string> Starters { get; set; }
@@ -121,6 +122,7 @@ namespace MPData
         public MainViewModel(IDishItemDataService dishItemDataService, IFileWriter excelWriter)
         {
             SaveCommand = new RelayCommand(SaveFiles);
+            AddNewDishItemCommand = new RelayCommand(AddNewDishItem);
 
             _dishItemDataService = dishItemDataService;
             _excelFileWriter = excelWriter;
@@ -133,44 +135,6 @@ namespace MPData
 
             InitializeViewModels();
             LoadDishes();
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Adds a new dish item to the respective list
-        /// </summary>
-        /// <param name="tabItemName">The name of the tab item</param>
-        public void AddNewDishItem(string tabItemName)
-        {
-            if (string.IsNullOrWhiteSpace(NewItem))
-            {
-                return;
-            }
-
-            IEnumerable<string> newList = default;
-
-            switch (tabItemName)
-            {
-                case "starters":
-                    newList = _dishItemDataService.AddItem(NewItem, DishType.Starters);
-                    Starters = new ObservableCollection<string>(newList);
-                    break;
-                case "mainDishes":
-                    newList = _dishItemDataService.AddItem(NewItem, DishType.MainDishes);
-                    MainDishes = new ObservableCollection<string>(newList);
-                    break;
-                case "sideDishes":
-                    newList = _dishItemDataService.AddItem(NewItem, DishType.SideDishes);
-                    SideDishes = new ObservableCollection<string>(newList);
-                    break;
-                default:
-                    break;
-            }
-
-            NewItem = "";
         }
 
         #endregion
@@ -205,6 +169,37 @@ namespace MPData
         }
 
         /// <summary>
+        /// Adds a new dish item to the respective list
+        /// </summary>
+        /// <param name="tabItemName">The name of the tab item</param>
+        private void AddNewDishItem()
+        {
+            if (string.IsNullOrWhiteSpace(NewItem))
+            {
+                return;
+            }
+
+            IEnumerable<string> newList = _dishItemDataService.AddItem(NewItem, SelectedType); ;
+
+            switch (SelectedType)
+            {
+                case DishType.Starters:
+                    Starters = new ObservableCollection<string>(newList);
+                    break;
+                case DishType.MainDishes:
+                    MainDishes = new ObservableCollection<string>(newList);
+                    break;
+                case DishType.SideDishes:
+                    SideDishes = new ObservableCollection<string>(newList);
+                    break;
+                default:
+                    break;
+            }
+
+            NewItem = "";
+        }
+
+        /// <summary>
         /// Saves the selected meal data in various file formats. Currently only
         /// saves .xlsx, because .pdf has to be handled differently
         /// </summary>
@@ -227,27 +222,6 @@ namespace MPData
             FileInfo file = new FileInfo(combinedPath);
 
             SaveAsExcel(file);
-
-            //if (Settings.SaveAsPdf)
-            //{
-            //    if (!file.Exists)
-            //    {
-            //        return;
-            //    }
-            //
-            //    FileInfo officeToPdf = new FileInfo("OfficeToPDF.exe");
-            //    if (officeToPdf.Exists)
-            //    {
-            //        ProcessStartInfo startInfo = new ProcessStartInfo();
-            //        startInfo.FileName = @"OfficeToPDF.exe";
-            //        startInfo.Arguments = file.FullName + " " + Path.ChangeExtension(file.FullName, ".pdf") + " /excel_active_sheet";
-            //        Process.Start(startInfo);
-            //    }
-            //    else
-            //    {
-            //        RaiseMessage("Konnte nicht als PDF speichern.\nDatei \"OfficeToPDF.exe\" nicht gefunden.");
-            //    }
-            //}
         }
 
         /// <summary>
