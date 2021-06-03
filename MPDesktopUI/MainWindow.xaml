@@ -27,7 +27,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Text="{Binding NewItem}" FontSize="14" />
             <Button Grid.Column="1" Width="100" HorizontalAlignment="Left" FontSize="14"
-                    Content="Hinzufügen" Click="OnClick_AddNewDishItem" />
+                    Content="Hinzufügen" Command="{Binding AddNewDishItemCommand}" />
             
             <StackPanel Grid.Column="1" Orientation="Horizontal" 
                         HorizontalAlignment="Right" VerticalAlignment="Bottom">
